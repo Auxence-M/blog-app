@@ -14,13 +14,26 @@ func main() {
 	// Create the Gin router
 	router := gin.Default()
 
-	// Creation endpoint
-	router.POST("/users", model.CreateUser)
-
 	// Login endpoint
 	router.POST("/login", model.GetUser)
 
-	err := router.Run(":8080")
+	// Creation endpoint
+	router.POST("/users", model.CreateUser)
+	router.POST("/posts", model.CreatePost)
+
+	// Listing endpoints
+	router.GET("/posts", model.ListPosts)
+	router.GET("/posts/:id", model.GetPost)
+
+	// Deletion endpoints
+	router.DELETE("/posts/:id", model.DeletePost)
+
+	err := router.SetTrustedProxies(nil)
+	if err != nil {
+		return
+	}
+
+	err = router.Run(":8080")
 	if err != nil {
 		log.Fatal(err)
 	}
