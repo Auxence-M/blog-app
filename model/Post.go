@@ -61,7 +61,7 @@ func ListPosts(context *gin.Context) {
 
 	// Check if there are posts
 	if result.RowsAffected == 0 {
-		context.JSON(http.StatusNotFound, gin.H{"message": "Posts not found"})
+		context.JSON(http.StatusNotFound, gin.H{"error": "Posts not found"})
 		return
 	}
 

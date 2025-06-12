@@ -28,8 +28,15 @@ func CreateUser(context *gin.Context) {
 		return
 	}
 
+	// Make sure a user with the same username does not exist
+	result := database.DB.First(&user, "username = ?", user.Username)
+	if result.RowsAffected > 0 {
+		context.JSON(http.StatusConflict, gin.H{"error": "A user with the same username already exists"})
+		return
+	}
+
 	// Insert user into database using gorm
-	result := database.DB.Create(&user)
+	result = database.DB.Create(&user)
 	if result.Error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
 		return
@@ -59,7 +66,7 @@ func GetUser(context *gin.Context) {
 
 	// Check if user was found
 	if result.RowsAffected == 0 {
-		context.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		context.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 		return
 	}
 
