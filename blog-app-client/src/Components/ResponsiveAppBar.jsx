@@ -60,7 +60,7 @@ export default function ResponsiveAppBar() {
         <StyledAppBar >
             <Container maxWidth="lg">
                 <StyledToolBar variant="dense" disableGutters>
-                    <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', paddingX: 0}}>
+                    <Box display="flex" flexGrow={1} alignItems="center" paddingX={0}>
                         <LogoIcon></LogoIcon>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                             <Button variant="text" color="info">
@@ -87,7 +87,7 @@ export default function ResponsiveAppBar() {
                         </Stack>
                         <ColorThemeButton></ColorThemeButton>
                     </Box>
-                    <Box  sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
+                    <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
                         <ColorThemeButton></ColorThemeButton>
                         <IconButton sx={{border: "1px solid", borderRadius: "0.5rem"}} onClick={() => {toggleDrawer(true)}}>
                             <MenuIcon></MenuIcon>
