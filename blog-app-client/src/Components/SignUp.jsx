@@ -84,7 +84,7 @@ export default function SignUp() {
                 setSignUpError(true);
             }
         } catch (error) {
-            setSignUpErrorMessage("500 : Server not connected");
+            setSignUpErrorMessage("500 : Internal Server Error. Server not connected");
             setSignUpError(true);
         }
     }

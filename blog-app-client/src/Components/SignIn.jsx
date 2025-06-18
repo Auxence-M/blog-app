@@ -83,7 +83,7 @@ export default function SignIn() {
                 setSignInError(true);
             }
         } catch (error) {
-            setSignInErrorMessage("500 : Server not connected");
+            setSignInErrorMessage("500 : Internal Server Error. Server not connected");
             setSignInError(true);
         }
     }
