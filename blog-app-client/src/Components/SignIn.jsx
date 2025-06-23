@@ -18,6 +18,7 @@ import {useAuthentication} from "../../AuthenticationContext.jsx";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import LogoIcon from "./LogoIcon.jsx";
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 const SelectTheme = styled("div")({
     position: "fixed",
@@ -31,7 +32,12 @@ const SignInContainer = styled(Box)({
     justifyContent: "center",
     minHeight: "100vh",
     padding: "2rem",
-})
+});
+
+const BackHomeButton = styled(Button)({
+    textTransform: "none",
+    paddingLeft: "0",
+});
 
 export default function SignIn() {
     const [username, setUsername] = useState("");
@@ -137,6 +143,11 @@ export default function SignIn() {
                              onSubmit={handleSubmit}
                              noValidate
                              sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
+                    <Box>
+                        <BackHomeButton variant="text" href="/" startIcon={<ArrowLeftIcon />}>
+                            Back
+                        </BackHomeButton>
+                    </Box>
                     <LogoIcon></LogoIcon>
                     <Typography component="h1" variant="h5">
                         Sign In
