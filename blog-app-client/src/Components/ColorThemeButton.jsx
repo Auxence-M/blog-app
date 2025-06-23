@@ -7,6 +7,9 @@ import Tooltip from '@mui/material/Tooltip';
 
 const StyledIconButton = styled(IconButton)(({theme}) => ({
     color: theme.palette.primary.main,
+    [theme.breakpoints.up("md")]: {
+        padding: "5px"
+    }
 }));
 
 export default function ColorThemeButton() {
@@ -22,8 +25,8 @@ export default function ColorThemeButton() {
     return (
         <Box>
             <Tooltip title={mode === "light" ? "Turn off the light" : "Turn on the light"} arrow>
-                <StyledIconButton onClick={handleClick} size="small" sx={{border: "1px solid", borderRadius: "0.5rem"}}>
-                    {mode === "dark" ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon/>}
+                <StyledIconButton onClick={handleClick} sx={{border: "1px solid", borderRadius: "0.5rem"}}>
+                    {mode === "dark" ? <LightModeOutlinedIcon/> : <DarkModeOutlinedIcon/>}
                 </StyledIconButton>
             </Tooltip>
         </Box>
