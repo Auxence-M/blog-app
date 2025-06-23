@@ -15,7 +15,6 @@ import {useAuthentication} from "../../AuthenticationContext.jsx";
 import ColorThemeButton from "./ColorThemeButton.jsx";
 import Stack from '@mui/material/Stack';
 import LogoIcon from "./LogoIcon.jsx";
-import {useNavigate} from "react-router-dom";
 
 const StyledAppBar = styled(AppBar)({
     position: "fixed",
@@ -40,8 +39,6 @@ const StyledToolBar = styled(Toolbar)(({theme}) => ({
 
 export default function ResponsiveAppBar() {
     const [open, setOpen] = useState(false);
-
-    const navigate = useNavigate();
 
     const {setUser, isLoggedIn, setIsLoggedIn} = useAuthentication();
 
@@ -78,10 +75,10 @@ export default function ResponsiveAppBar() {
                             </Button>
                         </Box>
                         <Stack direction="row" spacing={2} display={!isLoggedIn ? "block" : "none"}>
-                            <Button color="primary" variant="contained" onClick={() => {navigate("/SignUp")}}>
+                            <Button color="primary" variant="contained" href="/SignUp">
                                 Sign Up
                             </Button>
-                            <Button color="primary" variant="outlined" onClick={() => {navigate("/SignIn")}}>
+                            <Button color="primary" variant="outlined" href="/SignIn">
                                 Sign In
                             </Button>
                         </Stack>
@@ -89,7 +86,7 @@ export default function ResponsiveAppBar() {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
                         <ColorThemeButton></ColorThemeButton>
-                        <IconButton sx={{border: "1px solid", borderRadius: "0.5rem"}} onClick={() => {toggleDrawer(true)}}>
+                        <IconButton color="primary" sx={{border: "1px solid", borderRadius: "0.5rem"}} onClick={() => {toggleDrawer(true)}}>
                             <MenuIcon></MenuIcon>
                         </IconButton>
                         <Drawer anchor="top" open={open} onClose={() => {toggleDrawer(false)}}>
@@ -113,12 +110,12 @@ export default function ResponsiveAppBar() {
                                 </Box>
                                 <Box display={!isLoggedIn ? "block" : "none"}>
                                     <MenuItem>
-                                        <Button color="primary" variant="contained" fullWidth onClick={() => {navigate("/SignUp")}} >
+                                        <Button color="primary" variant="contained" fullWidth href="/SignUp" >
                                             Sign Up
                                         </Button>
                                     </MenuItem>
                                     <MenuItem>
-                                        <Button color="primary" variant="outlined" fullWidth onClick={() => {navigate("/SignIn")}} >
+                                        <Button color="primary" variant="outlined" fullWidth href="/SignIn" >
                                             Sign In
                                         </Button>
                                     </MenuItem>
