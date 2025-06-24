@@ -20,6 +20,7 @@ const StyledAppBar = styled(AppBar)({
     position: "fixed",
     boxShadow: 0,
     backgroundColor: "transparent",
+    border: "none",
     backgroundImage: "none",
     marginTop: "calc(var(--template-frame-height, 0px) + 28px)",
 });
@@ -54,7 +55,7 @@ export default function ResponsiveAppBar() {
     }
 
     return (
-        <StyledAppBar >
+        <StyledAppBar elevation={0}>
             <Container maxWidth="lg">
                 <StyledToolBar variant="dense" disableGutters>
                     <Box display="flex" flexGrow={1} alignItems="center" paddingX={0}>
@@ -90,7 +91,7 @@ export default function ResponsiveAppBar() {
                             <MenuIcon></MenuIcon>
                         </IconButton>
                         <Drawer anchor="top" open={open} onClose={() => {toggleDrawer(false)}}>
-                            <Box sx={{padding: 2}}>
+                            <Box sx={{padding: 2, backgroundColor: 'background.default'}}>
                                 <Box sx={{display: "flex", justifyContent: "flex-end"}}>
                                     <IconButton onClick={() => {toggleDrawer(false)}}>
                                         <CloseRoundedIcon></CloseRoundedIcon>
