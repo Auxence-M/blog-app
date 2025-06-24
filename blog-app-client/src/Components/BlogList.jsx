@@ -8,7 +8,11 @@ import {styled} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Alert from '@mui/material/Alert';
-import {LinearProgress} from "@mui/material";
+import LinearProgress from '@mui/material/LinearProgress';
+import {useNavigate, useSearchParams} from "react-router-dom";
+import BackToTopButton from "./BackToTopButton.jsx";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 const StyledTypography = styled(Typography)({
     display: '-webkit-box',
@@ -18,13 +22,36 @@ const StyledTypography = styled(Typography)({
     textOverflow: 'ellipsis',
 });
 
+const categories = ["All categories", "Company", "Design", "Engineering", "Product"]
+
 
 export default function BlogList() {
-    const [posts, setPosts] = useState([]);
+    const [selectedPosts, setSelectedPosts] = useState([]);
+    const [allPosts, setAllPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
+
+
+    const [filter, setFilter] = useState("All categories");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const postCategory = searchParams.get("category");
+
+
     const {user, setUser, isLoggedIn, setIsLoggedIn} = useAuthentication();
+
+    const navigate = useNavigate();
+
+    function handlePostFilter(category) {
+        setFilter(category);
+        if (category !== "All categories") {
+            setSelectedPosts(allPosts.filter((post) => post.category === category))
+            navigate({pathname: "/", search: `category=${category}`});
+        } else {
+            setSelectedPosts(allPosts);
+            navigate("/");
+        }
+    }
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -40,12 +67,22 @@ export default function BlogList() {
             setIsLoggedIn(true);
         }
 
+        // Arrow function to fetch selectedPosts from api
         const fetchPosts = async () => {
             const response = await fetch("/api/posts", {signal: signal});
 
             if (response.ok) {
                 const data = await response.json();
-                setPosts(data.posts)
+                const posts = data.posts;
+                setSelectedPosts(posts)
+                setAllPosts(posts)
+
+                // Filter selectedPosts on refresh when category is provided in route
+                if (postCategory) {
+                    setFilter(postCategory);
+                    setSelectedPosts(posts.filter((post) => post.category === postCategory))
+                }
+
                 setIsLoading(false);
             } else {
                 const error = await response.json();
@@ -61,7 +98,7 @@ export default function BlogList() {
                 if (error.name === "AbortError") {
                     console.log("Fetch aborted successfully");
                 } else {
-                    setError("500: An Unexpected error occurred while fetching the posts. Please try again later.");
+                    setError("500: An Unexpected error occurred while fetching the selectedPosts. Please try again later.");
                     setIsLoading(false);
                 }
             })
@@ -72,10 +109,10 @@ export default function BlogList() {
         }
     }, []);
 
-
     return (
         <Box display="flex" flexDirection="column"  justifyContent="center">
-            <Box sx={{marginBottom: 2}}>
+            <BackToTopButton></BackToTopButton>
+            <Box marginBottom={2}>
                 {isLoggedIn ? (
                     <Typography variant="h5" gutterBottom>
                         Welcome {user.username} !
@@ -95,12 +132,28 @@ export default function BlogList() {
                 }
 
                 {
-                    isLoading && <LinearProgress color="secondary"/>
+                    isLoading && <LinearProgress sx={{height: 5, borderRadius: 8}} color="secondary"/>
                 }
 
                 {
-                    posts.length > 0 &&
-                    posts.map((post) => (
+                    selectedPosts.length > 0 &&
+                    <Stack paddingBottom={1} overflow="auto" direction="row" spacing={3}>
+                        {
+                            categories.map((category) => (
+                                <Chip key={category}
+                                      label={category}
+                                      variant={filter === category ? "filled" : "outlined"}
+                                      color={filter === category ? "primary" : "default"}
+                                      onClick={() => handlePostFilter(category)}
+                                ></Chip>
+                            ))
+                        }
+                    </Stack>
+                }
+
+                {
+                    selectedPosts.length > 0 &&
+                    selectedPosts.map((post) => (
                         <Box key={post.ID}>
                             <Typography gutterBottom variant="caption" component="div">
                                 {post.category}
