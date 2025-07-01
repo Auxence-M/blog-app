@@ -98,11 +98,11 @@ export default function BlogList() {
                 if (error.name === "AbortError") {
                     console.log("Fetch aborted successfully");
                 } else {
-                    setError("500: An Unexpected error occurred while fetching the selectedPosts. Please try again later.");
+                    setError("500: An Unexpected error occurred while fetching the posts. Please try again later.");
                     setIsLoading(false);
                 }
             })
-        }, 1000) // one-second delay to simulate a loading page
+        }, 1000); // one-second delay to simulate a loading page
 
         return () => {
             abortController.abort();
@@ -159,7 +159,7 @@ export default function BlogList() {
                                 {post.category}
                             </Typography>
                             <Typography gutterBottom  variant="h6">
-                                <Link href="#" underline="hover">
+                                <Link href={`/blogs/${post.ID}`} underline="hover">
                                     {post.title}
                                 </Link>
                             </Typography>
@@ -170,7 +170,7 @@ export default function BlogList() {
                                 <Typography marginTop={0.5} variant="caption">
                                     {new Date(post.CreatedAt).toDateString()}
                                 </Typography>
-                                <Button sx={{textTransform: "none"}} variant="text" href="#" size="small" endIcon={<NavigateNextIcon />}>
+                                <Button sx={{textTransform: "none"}} variant="text" href={`/blogs/${post.ID}`} size="small" endIcon={<NavigateNextIcon />}>
                                     Read more
                                 </Button>
                             </Box>

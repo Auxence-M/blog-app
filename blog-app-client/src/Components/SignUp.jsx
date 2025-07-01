@@ -18,7 +18,7 @@ import {useAuthentication} from "../../AuthenticationContext.jsx";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import LogoIcon from "./LogoIcon.jsx";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 const SelectTheme = styled("div")({
     position: "fixed",
@@ -145,8 +145,8 @@ export default function SignUp() {
                              noValidate
                              sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
                     <Box>
-                        <BackHomeButton href="/" variant="text" startIcon={<ArrowLeftIcon />}>
-                            Back
+                        <BackHomeButton href="/" variant="text" startIcon={<NavigateBeforeIcon />}>
+                            Back to blog
                         </BackHomeButton>
                     </Box>
                     <LogoIcon></LogoIcon>
