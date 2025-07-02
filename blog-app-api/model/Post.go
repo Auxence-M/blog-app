@@ -94,6 +94,35 @@ func GetPost(context *gin.Context) {
 	context.JSON(http.StatusOK, gin.H{"message": "post found", "post": post})
 }
 
+func GetPostsByUser(context *gin.Context) {
+	var user = context.Param("user")
+
+	// Create post slice
+	var posts []Post
+
+	// Migrate the database schema
+	err := database.DB.AutoMigrate(&Post{})
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Query database for the post
+	result := database.DB.Where("author_id = ?", user).Find(&posts)
+	if result.Error != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
+		return
+	}
+
+	// Check if there are posts
+	if result.RowsAffected == 0 {
+		context.JSON(http.StatusNotFound, gin.H{"error": "Posts not found"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"posts": posts})
+}
+
 func DeletePost(context *gin.Context) {
 	// Get id param from gin context
 	var id = context.Param("id")
