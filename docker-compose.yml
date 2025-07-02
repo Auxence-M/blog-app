@@ -1,0 +1,21 @@
+services:
+  client:
+    container_name: blog-app-client
+    build:
+      context: ./blog-app-client
+      dockerfile: Dockerfile
+    volumes:
+      - ./blog-app-client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+  api:
+    container_name: blog-app-api
+    build:
+      context: ./blog-app-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
