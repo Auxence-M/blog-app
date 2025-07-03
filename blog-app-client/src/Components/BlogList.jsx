@@ -123,8 +123,15 @@ export default function BlogList() {
                     </Typography>
                 )}
             </Box>
-            <Typography variant="h5" gutterBottom>
-                Posts
+            <Typography component="h2" variant="h6" gutterBottom>
+                Posts{" "}
+                {
+                    filter !== "All categories" &&
+                    <span>
+                        categorized as {" "}
+                        <Typography component="span" variant="inherit" color="primary" noWrap>{`"${filter}"`}</Typography>
+                    </span>
+                }
             </Typography>
             <Box display="flex" flexDirection="column" justifyContent="space-between" gap={5} height="100%" marginTop={2}>
                 {
@@ -137,7 +144,7 @@ export default function BlogList() {
 
                 {
                     selectedPosts.length > 0 &&
-                    <Stack paddingBottom={1} overflow="auto" direction="row" spacing={3}>
+                    <Stack paddingBottom={1} overflow="auto" direction="row" spacing={2}>
                         {
                             categories.map((category) => (
                                 <Chip key={category}
@@ -170,7 +177,7 @@ export default function BlogList() {
                                 <Typography marginTop={0.5} variant="caption">
                                     {new Date(post.CreatedAt).toDateString()}
                                 </Typography>
-                                <Button sx={{textTransform: "none"}} variant="text" href={`/blogs/${post.ID}`} size="small" endIcon={<NavigateNextIcon />}>
+                                <Button component={Link} sx={{textTransform: "none"}} variant="text" href={`/blogs/${post.ID}`} size="small" endIcon={<NavigateNextIcon />}>
                                     Read more
                                 </Button>
                             </Box>
