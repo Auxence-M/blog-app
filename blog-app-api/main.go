@@ -24,7 +24,9 @@ func main() {
 	// Listing endpoints
 	router.GET("/posts", model.ListPosts)
 	router.GET("/posts/:id", model.GetPost)
-	router.GET("/posts/users/:user", model.GetPostsByUser)
+
+	//Editing endpoints
+	router.PUT("/posts/:id", model.UpdatePost)
 
 	// Deletion endpoints
 	router.DELETE("/posts/:id", model.DeletePost)
