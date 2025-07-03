@@ -5,16 +5,17 @@ FROM golang:latest
 WORKDIR /app
 
 # Copy the go.mod and go.sum files to the /app directory
-COPY go.mod go.sum ./
+COPY go.mod ./
+COPY go.sum ./
 
 # Install dependencies
 RUN go mod download
 
 # Copy the rest of the application files
-COPY . .
+COPY . ./
 
 # Build the application
-RUN go build -o blog-app-api
+RUN go build -o blog-app-api .
 
 # Expose the app port
 EXPOSE 8080

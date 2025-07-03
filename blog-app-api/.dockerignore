@@ -1,7 +1,12 @@
-node_modules
-npm-debug.log
-Dockerfile
-.dockerignore
 .git
-.gitignore
 .env
+.gitignore
+.vscode/
+.idea/
+*.log
+*.tmp
+tmp/
+build/
+dist/
+Makefile
+README.md

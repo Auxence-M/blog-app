@@ -17,5 +17,9 @@ services:
     build:
       context: ./blog-app-api
       dockerfile: Dockerfile
+    volumes:
+      - ./blog-app-api:/app
+    working_dir: /app # mounting ./blog-app-api:/app overrides /app meaning the blog-app-api build disappears
     ports:
       - "8080:8080"
+    command: ["go", "run", "main.go"]
