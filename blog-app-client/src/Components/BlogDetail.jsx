@@ -137,6 +137,7 @@ export default function BlogDetail() {
                 {
                     error !== "" && <Alert severity="error" variant="filled">{error}</Alert>
                 }
+
                 {
                     post !== null &&
                     <Box>
@@ -196,10 +197,10 @@ export default function BlogDetail() {
                         </Box>
                         <Box display="flex" justifyContent="flex-end" marginTop={3}>
                             <Box display={isEditing === true ? "none" : "block"}>
-                                <Button variant="contained" onClick={() => {setIsEditing(true)}}>Edit</Button>
+                                <Button variant="contained" onClick={() => {setIsEditing(true)}}>Edit Post</Button>
                             </Box>
                             <Stack display={isEditing === true ? "block" : "none"} direction="row" spacing={2}>
-                                <Button variant="contained" disabled={validateEdit()} onClick={()=> {setOpenDialog(true)}} >Save</Button>
+                                <Button variant="contained" disabled={validateEdit()} onClick={()=> {setOpenDialog(true)}} >Save Edit</Button>
                                 <Button variant="outlined" onClick={() => {setIsEditing(false)}}>Cancel</Button>
                             </Stack>
                         </Box>
@@ -222,8 +223,8 @@ export default function BlogDetail() {
                     </DialogActions>
                 </Box>
             </Dialog>
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                <Alert severity={editError === true ? "error" : "success"} variant="filled" onClose={handleSnackbarClose}>
+            <Snackbar anchorOrigin={{vertical: 'bottom', horizontal: 'center'}} open={openSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert sx={{width: "75vw"}} severity={editError === true ? "error" : "success"} variant="filled" onClose={handleSnackbarClose}>
                     {snackbarText}
                 </Alert>
             </Snackbar>
