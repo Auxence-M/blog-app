@@ -173,7 +173,7 @@ export default function BlogList() {
                             <StyledTypography variant="body2" color="textSecondary" gutterBottom>
                                 {post.content}
                             </StyledTypography>
-                            <Box display="flex" flexDirection="row" justifyContent="space-between">
+                            <Box marginTop={1.5} display="flex" flexDirection="row" justifyContent="space-between">
                                 <Typography marginTop={0.5} variant="caption">
                                     {new Date(post.CreatedAt).toDateString()}
                                 </Typography>
