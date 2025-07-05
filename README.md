@@ -1,6 +1,6 @@
 ## How to run
 
-### Simple way: with docker
+### Simple way: with docker compose
 - Clone the repository :
 ```
 git clone https://github.com/Auxence-M/blog-app.git
@@ -31,7 +31,7 @@ docker compose stop
 docker compose down
 ```
 
-### Longer way: with docker
+### Longer way: without docker compose
 
 If you don't have docker installed on you computer, make sure you have the latest version of [Golang](https://go.dev/doc/install) and [Node.js](https://nodejs.org/en/download) installed on the computer.
 
