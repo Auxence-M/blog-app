@@ -2,7 +2,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Blog from "./Blog.jsx";
 import SignIn from "./SignIn.jsx";
 import SignUp from "./SignUp.jsx";
-import BlogList from "./BlogList.jsx";
+import HomePage from "./HomePage.jsx";
 import BlogDetail from "./BlogDetail.jsx";
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Blog></Blog>,
         children: [
-            {index:  true, element: <BlogList />},
+            {index:  true, element: <HomePage />},
             {path: "/blogs/:id", element: <BlogDetail />},
         ]
     },
