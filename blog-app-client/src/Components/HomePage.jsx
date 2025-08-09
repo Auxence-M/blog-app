@@ -59,6 +59,7 @@ export default function HomePage() {
             })
         }, 800); // one-second delay to simulate a loading page
 
+        // Clean-up
         return () => {
             abortController.abort();
         }
