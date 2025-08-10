@@ -66,7 +66,7 @@ func GetUser(context *gin.Context) {
 
 	// Check if user was found
 	if result.RowsAffected == 0 {
-		context.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		context.JSON(http.StatusNotFound, gin.H{"error": "User not found or incorrect password"})
 		return
 	}
 
