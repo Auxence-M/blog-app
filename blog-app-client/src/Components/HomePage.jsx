@@ -57,7 +57,7 @@ export default function HomePage() {
                     setIsLoading(false);
                 }
             })
-        }, 800); // one-second delay to simulate a loading page
+        }, 1000); // one-second delay to simulate a loading page
 
         // Clean-up
         return () => {
@@ -75,18 +75,25 @@ export default function HomePage() {
                     </Typography>
                 ) : (
                     <Typography variant="h5" gutterBottom>
-                        Welcome ...
+                        Welcome
                     </Typography>
                 )}
             </Box>
 
             <Box display="flex" flexDirection="column" justifyContent="space-between" gap={3} height="100%">
                 {
-                    error !== "" && <Alert severity="error" variant="filled">{error}</Alert>
+                    error !== "" &&
+                    <Alert severity="error" variant="filled">{error}</Alert>
                 }
 
                 {
-                    isLoading && <LinearProgress sx={{height: 5, borderRadius: 8}} color="secondary"/>
+                    isLoading &&
+                    <Box>
+                        <Typography variant="h6" gutterBottom>
+                            Loading posts ...
+                        </Typography>
+                        <LinearProgress sx={{height: 5, borderRadius: 8}} color="secondary"/>
+                    </Box>
                 }
 
                 {

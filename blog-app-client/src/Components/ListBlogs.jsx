@@ -6,6 +6,7 @@ import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Link from "@mui/material/Link";
+import { Link as ReactRouterLink } from "react-router-dom";
 import {styled} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -94,7 +95,7 @@ export default function ListBlogs ({blogPosts}) {
                                         {post.category}
                                     </Typography>
                                     <Typography gutterBottom  variant="h6">
-                                        <Link href={`/blogs/${post.ID}`} underline="hover">
+                                        <Link component={ReactRouterLink} to={`/blogs/${post.ID}`} underline="hover">
                                             {post.title}
                                         </Link>
                                     </Typography>
@@ -105,7 +106,7 @@ export default function ListBlogs ({blogPosts}) {
                                         <Typography marginTop={0.5} variant="caption">
                                             {new Date(post.CreatedAt).toDateString()}
                                         </Typography>
-                                        <Button component={Link} sx={{textTransform: "none"}} variant="text" href={`/blogs/${post.ID}`} size="small" endIcon={<NavigateNextIcon />}>
+                                        <Button component={ReactRouterLink} sx={{textTransform: "none"}} variant="text" to={`/blogs/${post.ID}`} size="small" endIcon={<NavigateNextIcon />}>
                                             Read more
                                         </Button>
                                     </Box>
