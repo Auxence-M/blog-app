@@ -23,7 +23,7 @@ const BackHomeButton = styled(Button)({
     paddingLeft: "0",
 });
 
-export default function BlogDetail() {
+export default function BlogDetails() {
     const [post, setPost] = useState(null);
     const [error, setError] = useState("");
     const params = useParams();
