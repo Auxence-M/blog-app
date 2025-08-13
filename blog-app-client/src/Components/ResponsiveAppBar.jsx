@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import {styled} from "@mui/material/styles";
 import {useState} from "react";
+import { Link as ReactRouterLink } from "react-router-dom";
 import {useAuthentication} from "../../AuthenticationContext.jsx";
 import ColorThemeButton from "./ColorThemeButton.jsx";
 import Stack from '@mui/material/Stack';
@@ -76,10 +77,10 @@ export default function ResponsiveAppBar() {
                             </Button>
                         </Box>
                         <Stack direction="row" spacing={2} display={!isLoggedIn ? "block" : "none"}>
-                            <Button color="primary" variant="contained" href="/SignUp">
+                            <Button color="primary" variant="contained" component={ReactRouterLink} to="/sign-up">
                                 Sign Up
                             </Button>
-                            <Button color="primary" variant="outlined" href="/SignIn">
+                            <Button color="primary" variant="outlined" component={ReactRouterLink} to="/sign-in">
                                 Sign In
                             </Button>
                         </Stack>
@@ -104,19 +105,19 @@ export default function ResponsiveAppBar() {
                                 <Divider sx={{marginY: 2}}></Divider>
                                 <Box display={isLoggedIn ? "block" : "none"}>
                                     <MenuItem>
-                                        <Button color="primary" variant="contained" fullWidth>
+                                        <Button color="primary" variant="contained" onClick={handleSignOut} fullWidth>
                                             Sign Out
                                         </Button>
                                     </MenuItem>
                                 </Box>
                                 <Box display={!isLoggedIn ? "block" : "none"}>
                                     <MenuItem>
-                                        <Button color="primary" variant="contained" fullWidth href="/SignUp" >
+                                        <Button color="primary" variant="contained" component={ReactRouterLink} fullWidth to="/sign-up" >
                                             Sign Up
                                         </Button>
                                     </MenuItem>
                                     <MenuItem>
-                                        <Button color="primary" variant="outlined" fullWidth href="/SignIn" >
+                                        <Button color="primary" variant="outlined" component={ReactRouterLink} fullWidth to="/sign-in" >
                                             Sign In
                                         </Button>
                                     </MenuItem>

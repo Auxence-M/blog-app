@@ -17,6 +17,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Snackbar from '@mui/material/Snackbar';
+import { Link as ReactRouterLink } from "react-router-dom";
 
 const BackHomeButton = styled(Button)({
     textTransform: "none",
@@ -144,8 +145,8 @@ export default function BlogDetails() {
                         <BackToTopButton></BackToTopButton>
                         <Box>
                             <Box marginBottom={2}>
-                                <BackHomeButton variant="text" href="/" startIcon={<NavigateBeforeIcon />}>
-                                    Back to blog
+                                <BackHomeButton variant="text" component={ReactRouterLink} to="/" startIcon={<NavigateBeforeIcon />}>
+                                    Back to blogs
                                 </BackHomeButton>
                             </Box>
                             <Typography gutterBottom marginTop={0.5} variant="caption">

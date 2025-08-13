@@ -19,6 +19,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import LogoIcon from "./LogoIcon.jsx";
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { Link as ReactRouterLink } from "react-router-dom";
 
 const SelectTheme = styled("div")({
     position: "fixed",
@@ -144,8 +145,8 @@ export default function SignIn() {
                              noValidate
                              sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
                     <Box>
-                        <BackHomeButton variant="text" href="/" startIcon={<NavigateBeforeIcon />}>
-                            Back to blog
+                        <BackHomeButton variant="text" component={ReactRouterLink} to="/" startIcon={<NavigateBeforeIcon />}>
+                            Back to homepage
                         </BackHomeButton>
                     </Box>
                     <LogoIcon></LogoIcon>
@@ -198,7 +199,7 @@ export default function SignIn() {
                     <Divider>or</Divider>
                     <Typography sx={{ textAlign: "center" }}>
                         Don't have an account ?{" "}
-                        <Link href="/SignUp" sx={{ alignSelf: "center" }}>
+                        <Link component={ReactRouterLink} to="/sign-up" sx={{ alignSelf: "center" }}>
                             Sign Up
                         </Link>
                     </Typography>

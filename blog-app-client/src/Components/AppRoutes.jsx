@@ -14,8 +14,8 @@ const router = createBrowserRouter([
             {path: "/blogs/:id", element: <BlogDetails />},
         ]
     },
-    {path: "/SignIn", element: <SignIn />},
-    {path: "/SignUp", element: <SignUp />},
+    {path: "/sign-in", element: <SignIn />},
+    {path: "/sign-up", element: <SignUp />},
 ]);
 
 export default function AppRoutes() {
