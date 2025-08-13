@@ -22,7 +22,7 @@ export default function HomePage() {
         // Using userID as token
         const userID = localStorage.getItem("userID");
 
-        // Keeps the user signed in in case of page refresh
+        // Keeps the user signed-in in case of page refresh
         if (userID) {
             const username  = localStorage.getItem("username")
             setUser({username: username, userID: userID});
