@@ -3,7 +3,7 @@
 ### Simple way: with docker compose
 - Clone the repository :
 ```
-git clone https://github.com/Auxence-M/blog-app.git
+git clone https://github.com/auxence-m/blog-app.git
 ```
 
 - Navigate to the location of the directory :
@@ -37,7 +37,7 @@ If you don't have docker installed on you computer, make sure you have the lates
 
 - Clone the repository :
 ```
-git clone https://github.com/Auxence-M/blog-app.git
+git clone https://github.com/auxence-m/blog-app.git
 ```
 
 - Navigate to the location of the directory :
