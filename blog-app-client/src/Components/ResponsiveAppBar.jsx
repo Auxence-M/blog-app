@@ -42,7 +42,7 @@ const StyledToolBar = styled(Toolbar)(({theme}) => ({
 export default function ResponsiveAppBar() {
     const [open, setOpen] = useState(false);
 
-    const {setUser, isLoggedIn, setIsLoggedIn} = useAuthentication();
+    const {user, setUser, isLoggedIn, setIsLoggedIn} = useAuthentication();
 
     function toggleDrawer(state) {
         setOpen(state);
@@ -60,12 +60,14 @@ export default function ResponsiveAppBar() {
             <Container maxWidth="lg">
                 <StyledToolBar variant="dense" disableGutters>
                     <Box display="flex" flexGrow={1} alignItems="center" paddingX={0}>
-                        <LogoIcon></LogoIcon>
+                        <Box component={ReactRouterLink} to="/">
+                            <LogoIcon></LogoIcon>
+                        </Box>
                         <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                            <Button variant="text" color="info">
+                            <Button color="info" variant="text" component={ReactRouterLink} to={`/your-posts/${user?.userID}`}>
                                 My posts
                             </Button>
-                            <Button variant="text" color="info">
+                            <Button color="info" variant="text" component={ReactRouterLink} to="/create">
                                 Create a post
                             </Button>
                         </Box>
@@ -99,8 +101,8 @@ export default function ResponsiveAppBar() {
                                     </IconButton>
                                 </Box>
                                 <Box>
-                                    <MenuItem>My posts</MenuItem>
-                                    <MenuItem>Create a post</MenuItem>
+                                    <MenuItem component={ReactRouterLink} to={`/your-posts/${user?.userID}`}>My posts</MenuItem>
+                                    <MenuItem component={ReactRouterLink} to="/create">Create a post</MenuItem>
                                 </Box>
                                 <Divider sx={{marginY: 2}}></Divider>
                                 <Box display={isLoggedIn ? "block" : "none"}>
