@@ -23,33 +23,28 @@ export default function BlogsByUser() {
 
         // Arrow function to fetch selectedPosts from api
         const fetchPosts = async () => {
-            const response = await fetch("/api/posts", {signal: signal});
+            try {
+                const response = await fetch("/api/posts", {signal: signal});
 
-            if (response.ok) {
-                const data = await response.json();
-                const posts = data.posts;
-                setBlogs(posts.filter((blog) => blog.authorId === userID));
-
-                setIsLoading(false);
-            } else {
-                const error = await response.json();
-                const message = response.status + " : " + error.error;
-                setError(message);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBlogs(data.posts.filter((blog) => blog.authorId === userID));
+                } else {
+                    const error = await response.json();
+                    setError(`${response.status} : ${error.error}`);
+                }
+            } catch (error) {
+                if (error.name === "AbortError") {
+                    console.log("Fetch aborted successfully");
+                } else {
+                    setError("An Unexpected error occurred while fetching the posts. Please try again later.");
+                }
+            } finally {
                 setIsLoading(false);
             }
         }
 
-        setTimeout(() => {
-            // Fetch posts from api
-            fetchPosts().catch((error) => {
-                if (error.name === "AbortError") {
-                    console.log("Fetch aborted successfully");
-                } else {
-                    setError("500: An Unexpected error occurred while fetching the posts. Please try again later.");
-                    setIsLoading(false);
-                }
-            })
-        }, 800); // delay to simulate data being fetched
+        fetchPosts();
 
         // Clean-up
         return () => {

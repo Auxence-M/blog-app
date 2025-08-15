@@ -51,18 +51,25 @@ export default function BlogDetails() {
     }
 
     async function getPost(abortSignal) {
-        const response = await fetch(`/api/posts/${postId}`, {signal: abortSignal});
+        try {
+            const response = await fetch(`/api/posts/${postId}`, {signal: abortSignal});
 
-        if (response.ok) {
-            const data = await response.json();
-            const post = data.post;
-            setPost(post);
-            setTitle(post.title);
-            setContent(post.content);
-        } else {
-            const error = await response.json();
-            const message = response.status + " : " + error.error;
-            setError(message);
+            if (response.ok) {
+                const data = await response.json();
+                const post = data.post;
+                setPost(post);
+                setTitle(post.title);
+                setContent(post.content);
+            } else {
+                const error = await response.json();
+                setError(`${response.status}  : ${error.error}`);
+            }
+        } catch (error) {
+            if (error.name === "AbortError") {
+                console.log("Fetch aborted successfully");
+            } else {
+                setError("An Unexpected error occurred. Please try again later.");
+            }
         }
     }
 
@@ -81,31 +88,18 @@ export default function BlogDetails() {
             });
 
             if (response.ok) {
-                setIsEditing(false);
-                setOpenDialog(false);
                 setSnackbarText("Blog post successfully updated");
                 setEditError(false);
-                setOpenSnackbar(true);
-
-                const abortController = new AbortController();
-                const signal = abortController.signal;
-                await getPost(signal);
             } else {
-                setIsEditing(false);
-                setOpenDialog(false);
                 setSnackbarText("Failed to update blog post");
                 setEditError(true);
-                setOpenSnackbar(true);
-
-                const abortController = new AbortController();
-                const signal = abortController.signal;
-                await getPost(signal);
             }
         } catch (error) {
+            setSnackbarText("Something unexpected happened. Please try again later");
+            setEditError(true);
+        } finally {
             setIsEditing(false);
             setOpenDialog(false);
-            setSnackbarText("500 : Internal Server Error. Something unexpected happened. Please try again later");
-            setEditError(true);
             setOpenSnackbar(true);
 
             const abortController = new AbortController();
@@ -118,13 +112,7 @@ export default function BlogDetails() {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-        getPost(signal).catch((error) => {
-            if (error.name === "AbortError") {
-                console.log("Fetch aborted successfully");
-            } else {
-                setError("500: An Unexpected error occurred while fetching the blog post. Please try again later.");
-            }
-        });
+        getPost(signal);
 
         return () => {
             abortController.abort();

@@ -13,53 +13,38 @@ export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
 
-    const {user, setUser, isLoggedIn, setIsLoggedIn} = useAuthentication();
+    const {user, isLoggedIn} = useAuthentication();
 
     useEffect(() => {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-        // Using userID as token
-        const userID = localStorage.getItem("userID");
-
-        // Keeps the user signed-in in case of page refresh
-        if (userID) {
-            const username  = localStorage.getItem("username")
-            setUser({username: username, userID: userID});
-            setIsLoggedIn(true);
-        }
-
         // Arrow function to fetch selectedPosts from api
         const fetchPosts = async () => {
-            const response = await fetch("/api/posts", {signal: signal});
+            try {
+                const response = await fetch("/api/posts", {signal: signal});
 
-            if (response.ok) {
-                const data = await response.json();
-                const posts = data.posts;
-                setAllPosts(posts)
-
-                setIsLoading(false);
-            } else {
-                const error = await response.json();
-                const message = response.status + " : " + error.error;
-                setError(message);
+                if (response.ok) {
+                    const data = await response.json();
+                    setAllPosts(data.posts);
+                } else {
+                    const error = await response.json();
+                    setError(`${response.status} : ${error.error}`);
+                }
+            } catch (error) {
+                if (error.name === "AbortError") {
+                    console.log("Fetch aborted successfully");
+                } else {
+                    setError("An Unexpected error occurred while fetching the posts. Please try again later.");
+                }
+            } finally {
                 setIsLoading(false);
             }
         }
 
-        setTimeout(() => {
-            // Fetch posts from api
-            fetchPosts().catch((error) => {
-                if (error.name === "AbortError") {
-                    console.log("Fetch aborted successfully");
-                } else {
-                    setError("500: An Unexpected error occurred while fetching the posts. Please try again later.");
-                    setIsLoading(false);
-                }
-            })
-        }, 1000); // one-second delay to simulate a loading page
+        fetchPosts();
 
-        // Clean-up
+        // Clean-up function
         return () => {
             abortController.abort();
         }
@@ -69,15 +54,12 @@ export default function HomePage() {
         <Box display="flex" flexDirection="column"  justifyContent="center">
             <BackToTopButton></BackToTopButton>
             <Box marginBottom={2}>
-                {isLoggedIn ? (
-                    <Typography variant="h5" gutterBottom>
-                        Welcome {user.username} !
-                    </Typography>
-                ) : (
-                    <Typography variant="h5" gutterBottom>
-                        Welcome
-                    </Typography>
-                )}
+                <Typography variant="h6" gutterBottom>
+                    {
+                        isLoggedIn ? `Welcome ${user.username} !` : "Welcome"
+                    }
+
+                </Typography>
             </Box>
 
             <Box display="flex" flexDirection="column" justifyContent="space-between" gap={3} height="100%">

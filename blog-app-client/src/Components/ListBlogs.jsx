@@ -38,17 +38,14 @@ export default function ListBlogs ({blogPosts}) {
             return blogPosts.filter((post) => post.category === postCategory);
         }
         return blogPosts;
-    }, [blogPosts, postCategory])
-
-
-    const hasPosts = selectedPosts.length > 0
+    }, [blogPosts, postCategory]);
 
     function handlePostFilter(category) {
         if (category === filter) return ; // No need to re-filter or navigate if the category is the same
         if (category !== "All categories") {
             navigate({pathname: location.pathname, search: `category=${category}`}); // Changes query parameter
         } else {
-            navigate("/");
+            navigate(location.pathname);
         }
     }
 
@@ -56,7 +53,6 @@ export default function ListBlogs ({blogPosts}) {
         <Box>
             <Box display="flex" flexDirection="column" justifyContent="space-between" gap={3} height="100%">
                 {
-                    hasPosts > 0 &&
                     <Typography component="h2" variant="h6">
                         Posts{" "}
                         {
@@ -70,7 +66,6 @@ export default function ListBlogs ({blogPosts}) {
                 }
 
                 {
-                    hasPosts > 0 &&
                     <Stack paddingBottom={1} overflow="auto" direction="row" spacing={2}>
                         {
                             categories.map((category) => (
@@ -86,7 +81,7 @@ export default function ListBlogs ({blogPosts}) {
                 }
 
                 {
-                    hasPosts > 0 &&
+                    selectedPosts.length > 0 &&
                     <Stack spacing={5}>
                         {
                             selectedPosts.map((post) => (
