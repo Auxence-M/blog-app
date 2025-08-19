@@ -1,5 +1,5 @@
-import {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
@@ -21,7 +21,7 @@ import LogoIcon from "./LogoIcon.jsx";
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Link as ReactRouterLink } from "react-router-dom";
 
-const SelectTheme = styled("div")({
+const SelectTheme = styled(Box)({
     position: "fixed",
     top: "1rem",
     right: "2.5rem",
@@ -51,9 +51,20 @@ export default function SignIn() {
     const [signInError, setSignInError] = useState(false);
     const [signInErrorMessage, setSignInErrorMessage] = useState("");
 
+    const[redirectInfo, setRedirectInfo] = useState(false);
+
     const {setUser, setIsLoggedIn} = useAuthentication();
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const state = location.state;
+
+    useEffect(() => {
+        if (state) {
+            handleRedirectInfo();
+        }
+    }, []);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -100,7 +111,7 @@ export default function SignIn() {
 
         if (username === "") {
             setUsernameError(true);
-            setUsernameErrorMessage("Username name cannot be empty");
+            setUsernameErrorMessage("Username cannot be empty");
             isValid = false;
         } else if (username.length < 6) {
             setUsernameError(true);
@@ -113,7 +124,7 @@ export default function SignIn() {
 
         if (password === "") {
             setPasswordError(true);
-            setPasswordErrorMessage("Password name cannot be empty");
+            setPasswordErrorMessage("Password cannot be empty");
             isValid = false;
         } else if (password.length < 6) {
             setPasswordError(true);
@@ -132,6 +143,18 @@ export default function SignIn() {
             return;
         }
         setSignInError(false);
+    }
+
+    function handleRedirectInfo() {
+        setRedirectInfo(true);
+    }
+
+    function handleInfoClose(event, reason) {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setRedirectInfo(false);
     }
 
     return (
@@ -209,6 +232,12 @@ export default function SignIn() {
             <Snackbar open={signInError} autoHideDuration={6000} onClose={handleAlertClose}>
                 <Alert severity="error" variant="filled" onClose={handleAlertClose} sx={{width: "100%"}}>
                     {signInErrorMessage}
+                </Alert>
+            </Snackbar>
+
+            <Snackbar open={redirectInfo} autoHideDuration={6000} onClose={handleInfoClose}>
+                <Alert severity="info" variant="filled" onClose={handleInfoClose} sx={{width: "100%"}}>
+                    {state?.feedback}
                 </Alert>
             </Snackbar>
         </SignInContainer>
