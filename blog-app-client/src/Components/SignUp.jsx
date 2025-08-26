@@ -12,7 +12,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
-import {styled} from "@mui/material/styles";
 import ColorThemeButton from "./ColorThemeButton.jsx";
 import {useAuthentication} from "../../AuthenticationContext.jsx";
 import Snackbar from '@mui/material/Snackbar';
@@ -20,35 +19,20 @@ import Alert from '@mui/material/Alert';
 import LogoIcon from "./LogoIcon.jsx";
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Link as ReactRouterLink } from "react-router-dom";
-
-const SelectTheme = styled("div")({
-    position: "fixed",
-    top: "1rem",
-    right: "2.5rem",
-});
-
-const SignUpContainer = styled(Box)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: "100vh",
-    padding: "2rem",
-});
-
-const BackHomeButton = styled(Button)({
-    textTransform: "none",
-    paddingLeft: "0",
-});
-
+import {BackHomeButton, SignInContainer, ThemeToggle} from "./Utils.jsx";
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
     const [usernameErrorMessage, setUsernameErrorMessage] = useState("");
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+
     const [showPassword, setShowPassword] = useState(false);
+
     const [signUpError, setSignUpError] = useState(false);
     const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
 
@@ -136,10 +120,10 @@ export default function SignUp() {
     }
 
     return(
-        <SignUpContainer>
-            <SelectTheme>
+        <SignInContainer>
+            <ThemeToggle>
                 <ColorThemeButton/>
-            </SelectTheme>
+            </ThemeToggle>
             <Card sx={{margin: 'auto', padding: 2, width: "25rem", boxShadow: 3}}>
                 <CardContent component="form"
                              onSubmit={handleSubmit}
@@ -212,6 +196,6 @@ export default function SignUp() {
                     {signUpErrorMessage}
                 </Alert>
             </Snackbar>
-        </SignUpContainer>
+        </SignInContainer>
     );
 }

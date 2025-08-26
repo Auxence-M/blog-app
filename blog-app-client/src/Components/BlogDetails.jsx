@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Alert from "@mui/material/Alert";
-import {styled} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import Stack from "@mui/material/Stack";
@@ -18,11 +17,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Snackbar from '@mui/material/Snackbar';
 import { Link as ReactRouterLink } from "react-router-dom";
-
-const BackHomeButton = styled(Button)({
-    textTransform: "none",
-    paddingLeft: "0",
-});
+import {BackHomeButton} from "./Utils.jsx";
 
 export default function BlogDetails() {
     const [post, setPost] = useState(null);
