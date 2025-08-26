@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
-import BackToTopButton from "./BackToTopButton.jsx";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -54,7 +53,6 @@ export default function BlogsByUser() {
 
     return(
         <Box display="flex" flexDirection="column" justifyContent="center">
-            <BackToTopButton></BackToTopButton>
             <Box marginBottom={2}>
                 <Typography variant="h6" gutterBottom>
                     Here are all of your posts

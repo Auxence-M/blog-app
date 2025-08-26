@@ -4,7 +4,6 @@ import {useAuthentication} from "../../AuthenticationContext.jsx";
 import {useEffect, useState} from "react";
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
-import BackToTopButton from "./BackToTopButton.jsx";
 import ListBlogs from "./ListBlogs.jsx";
 
 
@@ -52,7 +51,7 @@ export default function HomePage() {
 
     return (
         <Box display="flex" flexDirection="column" justifyContent="center">
-            <BackToTopButton></BackToTopButton>
+
             <Box marginBottom={2}>
                 <Typography variant="h6" gutterBottom>
                     {
