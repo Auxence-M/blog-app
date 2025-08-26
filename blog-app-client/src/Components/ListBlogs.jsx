@@ -1,4 +1,4 @@
-import {useMemo} from "react";
+import {useMemo, useRef, useState} from "react";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -10,6 +10,7 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import {styled} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import Pagination from '@mui/material/Pagination';
 
 const StyledTypography = styled(Typography)({
     display: '-webkit-box',
@@ -19,7 +20,7 @@ const StyledTypography = styled(Typography)({
     textOverflow: 'ellipsis',
 });
 
-export default function ListBlogs ({blogPosts}) {
+export default function ListBlogs ({blogPosts, title}) {
     const categories = ["All categories", "Company", "Design", "Engineering", "Product"];
 
     const location = useLocation();
@@ -29,16 +30,31 @@ export default function ListBlogs ({blogPosts}) {
     const postCategory = searchParams.get("category");
     const filter = postCategory || "All categories";
 
+    const postListRef = useRef(null);
+    const PAGE_SIZE = 5;
+    const [page, setPage] = useState(0);
+
     // selectedPosts checks for a query parameter
     // If there is any, filter the posts according to the query parameter
     // UseMemo will update selectedPost every time postCategory changes
     const selectedPosts= useMemo(() => {
         if (blogPosts.length === 0) return [];
         if (postCategory && postCategory !== "All categories") {
+            setPage(0);
             return blogPosts.filter((post) => post.category === postCategory);
         }
         return blogPosts;
     }, [blogPosts, postCategory]);
+
+
+    const firstPost = page * PAGE_SIZE;
+    const totalPages = Math.ceil(selectedPosts.length / PAGE_SIZE);
+    const displayedPosts = selectedPosts.slice(firstPost, firstPost + PAGE_SIZE);
+
+    function handlePageChange(event, value) {
+        setPage(value-1);
+        postListRef.current?.scrollIntoView();
+    }
 
     function handlePostFilter(category) {
         if (category === filter) return ; // No need to re-filter or navigate if the category is the same
@@ -50,11 +66,11 @@ export default function ListBlogs ({blogPosts}) {
     }
 
     return (
-        <Box>
+        <Box ref={postListRef}>
             <Box display="flex" flexDirection="column" justifyContent="space-between" gap={3} height="100%">
                 {
                     <Typography component="h2" variant="h6">
-                        Posts{" "}
+                        {title}{" "}
                         {
                             filter !== "All categories" &&
                             <span>
@@ -84,7 +100,7 @@ export default function ListBlogs ({blogPosts}) {
                     selectedPosts.length > 0 &&
                     <Stack spacing={5}>
                         {
-                            selectedPosts.map((post) => (
+                            displayedPosts.map((post) => (
                                 <Box key={post.ID}>
                                     <Typography gutterBottom variant="caption" component="div">
                                         {post.category}
@@ -112,6 +128,7 @@ export default function ListBlogs ({blogPosts}) {
                     </Stack>
                 }
             </Box>
+            <Pagination page={page + 1} count={totalPages} variant="outlined" shape="rounded" sx={{marginTop: 4, marginBottom: 4}} onChange={handlePageChange}></Pagination>
         </Box>
     );
 }

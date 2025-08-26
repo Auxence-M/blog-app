@@ -51,7 +51,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <Box display="flex" flexDirection="column"  justifyContent="center">
+        <Box display="flex" flexDirection="column" justifyContent="center">
             <BackToTopButton></BackToTopButton>
             <Box marginBottom={2}>
                 <Typography variant="h6" gutterBottom>
@@ -80,7 +80,7 @@ export default function HomePage() {
 
                 {
                     allPosts.length > 0 &&
-                    <ListBlogs blogPosts={allPosts}></ListBlogs>
+                    <ListBlogs blogPosts={allPosts} title={"Posts"}></ListBlogs>
                 }
             </Box>
         </Box>

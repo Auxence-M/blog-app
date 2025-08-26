@@ -79,7 +79,7 @@ export default function BlogsByUser() {
 
                 {
                     blogs.length > 0 &&
-                    <ListBlogs blogPosts={blogs}></ListBlogs>
+                    <ListBlogs blogPosts={blogs} title={"Your Posts"}></ListBlogs>
 
                 }
 
